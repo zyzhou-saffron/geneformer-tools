@@ -3,10 +3,10 @@
 路径默认指向 ~/Projects,可用环境变量覆盖。"""
 import os
 
-# ---------------------------------------------------------------- 密钥(从环境变量)
+# ---------------- NCBI E-utilities (Entrez) API key —— fetch_literature_info 查文献用(免费,NCBI 账号生成)
 # 用前先 export(并轮换掉历史里那个已泄露的旧 key):
-#   export OPENTARGETS_API_KEY="<your key>"
-OPENTARGETS_API_KEY = os.environ.get("OPENTARGETS_API_KEY", "")
+#   export NCBI_API_KEY="<your key>"
+NCBI_API_KEY = os.environ.get("NCBI_API_KEY", "")
 
 # ---------------------------------------------------------------- Geneformer 仓库 / 字典
 GENEFORMER_REPO = os.path.expanduser(

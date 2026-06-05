@@ -16,7 +16,7 @@ import requests
 import tqdm
 from tqdm.rich import trange
 
-from .config import OPENTARGETS_API_KEY, LOG_DIR
+from .config import NCBI_API_KEY, LOG_DIR
 
 logger = logging.getLogger(__name__)
 
@@ -261,7 +261,7 @@ class ResultAnalysis:
                     log_file_dir: str = None
         ):
         # 密钥/日志目录默认从 config(环境变量)读取,不再硬编码
-        api_key = api_key or OPENTARGETS_API_KEY
+        api_key = api_key or NCBI_API_KEY
         log_file_dir = log_file_dir or LOG_DIR
         os.makedirs(log_file_dir, exist_ok=True)
         # 设置logger文档

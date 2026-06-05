@@ -30,7 +30,7 @@ pip install -e ~/Projects/geneformer-tools     # editable:改代码立即生效,
 
 ## 配置(用前 export;见 config.py)
 ```bash
-export OPENTARGETS_API_KEY="<你的 key>"     # ⚠️ 旧 key 曾硬编码泄露,请轮换一个新的
+export NCBI_API_KEY="<你的 key>"     # ⚠️ 旧 key 曾硬编码泄露,请轮换一个新的
 export GENEFORMER_REPO="$HOME/Projects/geneformer/Geneformer"
 export GF_FINETUNED_MODEL="/path/to/.../checkpoint-XXXX"   # ISP 用的微调模型
 ```
