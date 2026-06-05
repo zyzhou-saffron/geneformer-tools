@@ -1,0 +1,14 @@
+[project]
+name = "geneformer-tools"
+version = "0.1.0"
+description = "Custom Geneformer extensions (DualPerturber + ResultAnalysis), extracted from site-packages into version control."
+requires-python = ">=3.10"
+# 依赖由现有 genefoemer conda 环境提供(geneformer / torch / datasets / pandas / requests / tqdm)。
+# 这里不重复声明,避免与环境里的版本冲突;本包以 editable 方式安装。
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+packages = ["geneformer_tools"]

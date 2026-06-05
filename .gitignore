@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.ipynb_checkpoints/
+.env
+
+# 数据 / 模型 / 输出 —— 绝不提交(太大且不该进 git)
+*.dataset/
+*.loom
+*.h5ad
+*.pkl
+*.pickle
+*.safetensors
+*.bin
+*.arrow
+
+# 运行产物
+logs/
+outputs/
+outputs_*/
+runs/
+*.log
+
+# 笔记本输出(只提交代码,不提交渲染输出 —— 见 README 的 nbstripout 建议)
+notebooks/**/*-checkpoint.ipynb
