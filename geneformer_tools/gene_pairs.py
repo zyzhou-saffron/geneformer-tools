@@ -69,6 +69,11 @@ def valid_pairs_cross_celltype(genes_in_dict, token_dict, tokenized_dataset,
 
     与同细胞共现的 valid_pairs 不同:这里是 g1∈A类细胞的 token 并集 且 g2∈B类细胞的 token 并集
     (非对称),用 combinations 枚举。返回 list[tuple]。
+
+    ⚠️ 注意:这只是"**选对器**"——它挑出跨细胞的候选基因对。配套的**跨细胞扰动执行**
+    (把 g1 在 A 类细胞、g2 在 B 类细胞里扰动再测状态偏移的 ISP)**目前尚未实现**,
+    所以这个函数当前**没有下游消费者**。逻辑本身已对真实数据验证等价(25012==25012),
+    保留它是为将来实现跨细胞扰动时直接复用;在那之前不要误以为存在完整的"异细胞扰动流程"。
     """
     set_a = celltype_token_union(tokenized_dataset, celltype_a, celltype_col)
     set_b = celltype_token_union(tokenized_dataset, celltype_b, celltype_col)
