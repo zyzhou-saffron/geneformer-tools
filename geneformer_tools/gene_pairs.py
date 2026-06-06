@@ -52,3 +52,28 @@ def valid_pairs(genes_in_dict: list, token_dict: dict, cell_sets: list,
                 out.append((g1, g2))
                 break
     return out
+
+
+def celltype_token_union(tokenized_dataset, cell_type, celltype_col="cell_type"):
+    """某一类细胞里出现过的所有 token 的并集(方案二用)。"""
+    union = set()
+    for ex in tokenized_dataset:
+        if ex[celltype_col] == cell_type:
+            union.update(ex["input_ids"])
+    return union
+
+
+def valid_pairs_cross_celltype(genes_in_dict, token_dict, tokenized_dataset,
+                               celltype_a, celltype_b, celltype_col="cell_type"):
+    """跨细胞类型基因对(方案二):保留 g1 在 celltype_a 中表达过、且 g2 在 celltype_b 中表达过的对。
+
+    与同细胞共现的 valid_pairs 不同:这里是 g1∈A类细胞的 token 并集 且 g2∈B类细胞的 token 并集
+    (非对称),用 combinations 枚举。返回 list[tuple]。
+    """
+    set_a = celltype_token_union(tokenized_dataset, celltype_a, celltype_col)
+    set_b = celltype_token_union(tokenized_dataset, celltype_b, celltype_col)
+    out = []
+    for g1, g2 in itertools.combinations(genes_in_dict, 2):
+        if token_dict[g1] in set_a and token_dict[g2] in set_b:
+            out.append((g1, g2))
+    return out
