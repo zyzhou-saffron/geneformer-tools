@@ -18,9 +18,18 @@ GENE_MEDIAN_30M = os.path.join(GC30M_DIR, "gene_median_dictionary_gc30M.pkl")
 GENE_MAPPING_30M = os.path.join(GC30M_DIR, "ensembl_mapping_dict_gc30M.pkl")
 GENE_NAME_ID_30M = os.path.join(GC30M_DIR, "gene_name_id_dict_gc30M.pkl")
 
-# 微调好的 CellClassifier checkpoint(ISP 用;改成你的实际路径)
+# 微调好的 CellClassifier checkpoint(ISP 用)。默认指向已确认存在的 normal/Crohn 2 类
+# CellClassifier(gf-6L-30M 基座,200-trial 超参搜索里的 878622fc_12 试验)。可用 env 覆盖:
 #   export GF_FINETUNED_MODEL="/path/to/.../checkpoint-XXXX"
-FINETUNED_MODEL = os.path.expanduser(os.environ.get("GF_FINETUNED_MODEL", ""))
+_DEFAULT_FINETUNED_MODEL = (
+    "~/Projects/geneformer/finetuning30m/250516115628/"
+    "250516_geneformer_cellClassifier_cm_classifier_test/ksplit1/_objective_2025-05-16_11-57-46/"
+    "_objective_878622fc_12_learning_rate=0.0005,lr_scheduler_type=cosine,num_train_epochs=1,"
+    "per_device_train_batch_size=12,seed=86.044_2025-05-16_13-27-01/checkpoint_000000/checkpoint-3761/"
+)
+FINETUNED_MODEL = os.path.expanduser(
+    os.environ.get("GF_FINETUNED_MODEL", _DEFAULT_FINETUNED_MODEL)
+)
 
 # ---------------------------------------------------------------- 输出 / 日志
 LOG_DIR = os.path.expanduser(os.environ.get("GF_LOG_DIR", "~/Projects/geneformer-tools/logs"))
