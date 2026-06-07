@@ -8,13 +8,13 @@
 
 | 模块 | 作用 |
 |---|---|
-| `gene_pairs` | 候选基因 / 基因对选择:同细胞共现(有序/无序)、跨细胞类型配对 |
-| `state_embs` | 计算细胞状态锚点向量(start / goal state embeddings) |
+| `data_prep` | **①准备数据**:AnnData 预处理(基因名↔Ensembl 映射、补 geneformer 字段)+ `TranscriptomeTokenizer` 封装 |
+| `gene_pairs` | **②选对**:候选基因 / 基因对选择——同细胞共现(有序/无序)、跨细胞类型配对 |
+| `state_embs` | **③状态锚点**:计算细胞状态向量(start / goal state embeddings) |
 | `perturb` | `DualPerturber`——双重扰动(删基因 1 + 过表达基因 2) |
-| `isp_runner` | 批量扰动 sweep:按 `perturb_type` 分发(dual→`DualPerturber`,其余→官方 `InSilicoPerturber`)+ 端到端封装(state_embs → 选对 → 扰动) |
-| `isp_stats` | 把扰动产出的 cosine-shift 汇总成 goal-state 偏移结果表(单/组扰动均值;全基因带随机背景的 FDR 显著性) |
-| `analysis` | `ResultAnalysis`——Open Targets + EuropePMC + NCBI E-utilities 文献分析 |
-| `data_prep` | AnnData 预处理(基因名↔Ensembl 映射、补 geneformer 字段)+ `TranscriptomeTokenizer` 封装 |
+| `isp_runner` | **④扰动**:批量 sweep,按 `perturb_type` 分发(dual→`DualPerturber`,其余→官方 `InSilicoPerturber`)+ 端到端封装(state_embs → 选对 → 扰动) |
+| `isp_stats` | **⑤统计**:把扰动产出的 cosine-shift 汇总成 goal-state 偏移结果表(单/组扰动均值;全基因带随机背景的 FDR 显著性) |
+| `analysis` | **⑥解读**:`ResultAnalysis`——Open Targets + EuropePMC + NCBI E-utilities 文献分析 |
 
 ## 安装
 
@@ -34,6 +34,16 @@ cell_states = {
     "state_key": "disease", "start_state": "normal",
     "goal_state": "Crohn disease", "alt_states": [],
 }
+
+# 0) 准备数据:原始 AnnData → 补 geneformer 字段 → tokenize 成 .dataset
+#    (若已有 tokenized .dataset 可跳过)
+import scanpy as sc
+from geneformer_tools.data_prep import prepare_adata_for_geneformer, tokenize_h5ad
+
+adata = prepare_adata_for_geneformer(sc.read_h5ad("/path/to/raw.h5ad"))  # 加 ensembl_id/n_counts/joinid
+adata.write("/path/to/h5ad_dir/prepared.h5ad")
+tokenize_h5ad("/path/to/h5ad_dir", "/path/to/out", "my_30m_tokenized",
+              custom_attr_name_dict={"cell_type": "cell_type"})           # → /path/to/out/my_30m_tokenized.dataset
 
 # 1) 跑一轮扰动 sweep —— 对每个候选基因对执行扰动,产出 _raw.pickle
 out_dir = prepare_and_run_isp(
