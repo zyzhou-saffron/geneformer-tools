@@ -89,6 +89,10 @@ export GF_FINETUNED_MODEL="/path/to/checkpoint"   # ISP 用的微调分类器
   (`goal_state_shift` 等)。
 - **30M vs 95M**:用 gc-30M 系列模型时,token 字典必须配套 gc30M 版本,否则会静默用错默认字典。
 
+## 示例
+
+- [`examples/isp_workflow.ipynb`](examples/isp_workflow.ipynb) —— 完整 ISP 工作流 notebook(从数据准备到结果分析),已清空输出。
+
 ## 文档
 
 - [CHANGELOG.md](CHANGELOG.md) —— 模块总览 + 逐步迁移历史。
