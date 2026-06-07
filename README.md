@@ -4,6 +4,12 @@
 
 围绕一次完整的 ISP 实验,本包提供:在细胞中共现的候选基因(对)选择 → 批量删除/过表达/双重扰动 → 量化每个扰动向目标状态的偏移 → 结果的文献层面解读。
 
+<p align="center">
+  <img src="docs/isp_result.png" alt="Normal → Crohn disease 删除扰动结果" width="440">
+</p>
+
+> **产出示例**:Normal → Crohn disease 删除扰动结果。每个点是一个基因,纵轴为把细胞推向 Crohn 状态的偏移分数;青色为 Open Targets 的 IBD 关联基因作背景分布,橙色为本流程命中的基因(如 VDR、DAP)。
+
 ## 功能
 
 | 模块 | 作用 |
