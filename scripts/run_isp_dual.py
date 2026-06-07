@@ -3,14 +3,21 @@
 跑法(后台):
   nohup python scripts/run_isp_dual.py >> ~/isp.dual_N2CD.log 2>&1 &
 """
+import os
+
 from geneformer_tools import config
 from geneformer_tools.isp_runner import prepare_and_run_isp
 
-# —— 实验特定路径(IBD 肠道数据集);通用路径(token 字典 / 微调模型)走 config ——
-INPUT_DATA = "~/Projects/geneformer/geneformer_testdata/Total_Cells_of_the_human_intestinal_tract_mapped_across_space_and_time/30m_tokenized.dataset"
-GENE_TSV = "~/Documents/data/ibd/ibd_322_irigis_esgn.tsv"
-OUTPUT_BASE = "~/Projects/geneformer/geneformer_testdata/isp/outputs_intermediate_files"
-EMB_OUT = "~/Projects/geneformer/geneformer_testdata/isp/output_embs"
+# —— 实验特定路径(IBD 肠道数据集);~ 展开、可用环境变量覆盖;通用路径(token 字典 / 微调模型)走 config ——
+INPUT_DATA = os.path.expanduser(os.environ.get(
+    "ISP_INPUT_DATA",
+    "~/Projects/geneformer/geneformer_testdata/Total_Cells_of_the_human_intestinal_tract_mapped_across_space_and_time/30m_tokenized.dataset"))
+GENE_TSV = os.path.expanduser(os.environ.get(
+    "ISP_GENE_TSV", "~/Documents/data/ibd/ibd_322_irigis_esgn.tsv"))
+OUTPUT_BASE = os.path.expanduser(os.environ.get(
+    "ISP_OUTPUT_BASE", "~/Projects/geneformer/geneformer_testdata/isp/outputs_intermediate_files"))
+EMB_OUT = os.path.expanduser(os.environ.get(
+    "ISP_EMB_OUT", "~/Projects/geneformer/geneformer_testdata/isp/output_embs"))
 CELL_STATES = {
     "state_key": "disease",
     "start_state": "normal",
